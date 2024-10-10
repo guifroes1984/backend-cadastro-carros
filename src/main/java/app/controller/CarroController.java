@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Carro;
@@ -69,6 +70,36 @@ public class CarroController {
 		try {
 			Carro carro = this.carroService.buscarPorId(id);
 			return new ResponseEntity<>(carro, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/buscarPorNome")
+	public ResponseEntity<List<Carro>> buscarPorNome(@RequestParam String nome) {
+		try {
+			List<Carro> lista = this.carroService.findByNome(nome);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/buscarPorMarca")
+	public ResponseEntity<List<Carro>> buscarPorMarca(@RequestParam long idMarca) {
+		try {
+			List<Carro> lista = this.carroService.findByMarca(idMarca);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/buscarAcimaAno")
+	public ResponseEntity<List<Carro>> buscarAcimaAno(@RequestParam int ano) {
+		try {
+			List<Carro> lista = this.carroService.findAcimaAno(ano);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
